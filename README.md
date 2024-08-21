@@ -26,17 +26,19 @@ This could probably be achieved by combining
   - Install and configure Elasticsearch for document indexing and search capabilities. [insta-infra](https://github.com/data-catering/insta-infra)
   - Design and implement the structure for document indexing.
 
-- [ ] Setup LLM query builder
+- [x] Setup LLM query builder
   - Integrate an open-source LLM (e.g., llama3(.1)) with the system.
   - Develop a query builder to interact with the LLM, leveraging the indexed documents.
 
-- [ ] Setup query execution and response handler
+- [x] Setup query execution and response handler
   - Implement logic to execute queries against the LLM using the structured data from Elasticsearch.
   - Create a response handler to parse and present the answers effectively.
 
 - [ ] Testing and optimization
   - Conduct tests to evaluate the system's accuracy and responsiveness.
   - Fine-tune the LLM and Elasticsearch configurations for optimal performance.
+    - Add more curated data
+    - Add more other sources of data
 
 - [ ] Future improvements
   - Explore the possibility of training a custom model on Avinode data for more accurate responses.
