@@ -48,7 +48,7 @@ func main() {
 	}
 
 	// Print the llmContext (response)
-	fmt.Println("Model response:", llmContext.Resposne)
+	fmt.Println(Green + "Model response:\n", Reset + llmContext.Resposne)
 
 	// Finished
 }
