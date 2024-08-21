@@ -7,13 +7,35 @@ import (
 	"fmt"
 	"log"
 	"strings"
+	"io"
 
 	"github.com/elastic/go-elasticsearch/v8"
 	"github.com/elastic/go-elasticsearch/v8/esapi"
 )
 
+// ESClient represents your Elasticsearch client
 type ESClient struct {
 	*elasticsearch.Client
+}
+
+// Source represents the _source object in each hit
+type Source struct {
+	Content string `json:"content"`
+}
+
+// Hit represents a single hit in the Elasticsearch response
+type Hit struct {
+	Source Source `json:"_source"`
+}
+
+// Hits represents the hits section in the Elasticsearch response
+type Hits struct {
+	Hits []Hit `json:"hits"`
+}
+
+// Response represents the top-level Elasticsearch response structure
+type ESResponse struct {
+	Hits Hits `json:"hits"`
 }
 
 func Es(adress string, user string, pass string) *ESClient {
@@ -94,4 +116,33 @@ func (client *ESClient) Get(index string, query string, size int) (*esapi.Respon
 	}
 
 	return res, nil
+}
+
+// Parse extracts all "content" fields, concatenates them, and returns a single string
+func (client *ESClient) Parse(response *esapi.Response) (string, error) {
+	if response == nil {
+		return "", io.EOF
+	}
+
+	// Read the response body
+	body, err := io.ReadAll(response.Body)
+	if err != nil {
+		return "", err
+	}
+
+	// Unmarshal the JSON into the ESResponse struct
+	var esResponse ESResponse
+	if err := json.Unmarshal(body, &esResponse); err != nil {
+		return "", fmt.Errorf("error unmarshalling response: %v", err)
+	}
+
+	// Use a StringBuilder for efficient string concatenation
+	var sb strings.Builder
+	for _, hit := range esResponse.Hits.Hits {
+		sb.WriteString(hit.Source.Content)
+		sb.WriteString(" ") // Add a space or any separator between content strings, if needed
+	}
+
+	// Convert the StringBuilder to a string and return
+	return sb.String(), nil
 }
