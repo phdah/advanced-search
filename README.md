@@ -18,11 +18,11 @@ This could probably be achieved by combining
   - Review problem statement and existing challenges with document navigation in Confluence.
   - Initial design ideas sketched.
 
-- [ ] Pick documents
+- [x] Pick documents
   - Identify key documents and data sources that need to be indexed. -> [Avinode api](https://developer.avinodegroup.com/docs/introduction) which will have to be scraped.
   - Gather necessary documentation from some source (wikipedia or pip?) and other relevant sources.
 
-- [ ] Setup elastic search
+- [x] Setup elastic search
   - Install and configure Elasticsearch for document indexing and search capabilities. [insta-infra](https://github.com/data-catering/insta-infra)
   - Design and implement the structure for document indexing.
 
