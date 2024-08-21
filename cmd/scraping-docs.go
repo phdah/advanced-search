@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"path"
 
@@ -47,9 +46,9 @@ func main() {
 		})
 
 		// Get all paragraphs
-		c.OnHTML("p", func(e *colly.HTMLElement) {
+		c.OnHTML("h1, h2, h3, h4, h5, h6, p, li", func(e *colly.HTMLElement) {
 			paragraph := e.Text
-			document += paragraph
+			document += " " + paragraph
 		})
 
 		// Visit the page

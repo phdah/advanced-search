@@ -9,5 +9,8 @@ elastic-search:
 	ELASTICSEARCH_PASSWORD="hackathon123" && $$HOME/repos/privat/insta-infra/run.sh elasticsearch
 	curl -u "elastic:hackathon123" -X GET "http://localhost:9200"
 
-scrape:
+scrape: build-scrape
 	go run ./cmd/scraping-docs.go
+
+build-scrape:
+	go build -o ./bin/scraping-docs ./cmd/scraping-docs.go
