@@ -1,6 +1,6 @@
 
 run: build
-	./bin/advanced-search
+	bin/advanced-search "What does an aircraft refer to, and what types exists?"
 
 build:
 	go build -o ./bin/advanced-search ./cmd/advanced-search.go
