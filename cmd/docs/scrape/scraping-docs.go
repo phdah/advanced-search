@@ -33,6 +33,14 @@ func main() {
         "https://developer.avinodegroup.com/docs/schedaero-webhooks",
         "https://developer.avinodegroup.com/docs/working-with-deep-links",
         "https://developer.avinodegroup.com/docs/brand-guidelines",
+
+        "https://en.wikipedia.org/wiki/Marathon",
+        "https://en.wikipedia.org/wiki/Ultramarathon",
+        "https://en.wikipedia.org/wiki/Barefoot_running",
+
+        "https://github.com/mfussenegger/nvim-dap",
+        "https://github.com/mfussenegger/nvim-dap/wiki/Debug-Adapter-installation",
+        "https://github.com/rcarriga/nvim-dap-ui",
     }
 
     // Iterate over URLs
