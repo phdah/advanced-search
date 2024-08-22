@@ -26,19 +26,22 @@ func main() {
     query := os.Args[1]
 
     // Get documents matching the query
-    res, err := es.Get(esIndex, "Aircraft Category Piston", 2)
-    // res, err := es.Get(esIndex, query, 2)
+    res, err := es.Get(esIndex, query, 2)
     if err != nil {
         log.Fatalf("Error performing search: %s", err)
     }
     defer res.Body.Close()
 
-    document, err := es.Parse(res)
+    document, err := es.Parse(res, "content")
     if err != nil {
         log.Fatalf("Error parsing body: %s", err)
     }
     // Step 2 - Setup prompt
-    prompt := "You are a helper with answering questions about documentation. You will be passed; documentation and a question about that. Only answer the given question, using the information in the in the documentation. Never make up an answer."
+    prompt := `You are a helper with answering questions about documentation. You will be passed; documentation and a question about that. Only answer the given question, using the information in the in the documentation. Never make up an answer.
+
+Format your response like this:
+
+<Document title from where the information is taken>: <the answer to the question(s) preferably using quotes and listing of result>`
 
     prompt += "\nThis is the documentations: " + document
 
@@ -52,7 +55,7 @@ func main() {
     }
 
     // Print the llmContext (response)
-    fmt.Println(Green + "Model response:\n", Reset + llmContext.Resposne)
+    fmt.Println(Green + "Model response:\n", Reset + llmContext.Response)
 
     // Finished
 }

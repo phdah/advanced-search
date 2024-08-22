@@ -10,7 +10,7 @@ elastic-search:
 	curl -u "elastic:hackathon123" -X GET "http://localhost:9200"
 
 scrape: build-scrape
-	go run ./cmd/scraping-docs.go
+	bin/scraping-docs
 
 build-scrape:
 	go build -o ./bin/scraping-docs ./cmd/docs/scrape/scraping-docs.go

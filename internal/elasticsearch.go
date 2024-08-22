@@ -20,7 +20,9 @@ type ESClient struct {
 
 // Source represents the _source object in each hit
 type Source struct {
+    Title string `json:"title"`
     Content string `json:"content"`
+    Description string `json:"description"`
 }
 
 // Hit represents a single hit in the Elasticsearch response
@@ -53,9 +55,9 @@ func Es(adress string, user string, pass string) *ESClient {
     return &ESClient{Client: es}
 }
 
-func (Es *ESClient) Put(index string, id string, body string) *esapi.Response {
+func (Es *ESClient) Put(index string, id string, body string, description string) *esapi.Response {
     // Prepare index request
-    jsonBody := fmt.Sprintf(`{"content": %q}`, body)
+    jsonBody := fmt.Sprintf(`{"title": %q, "content": %q, "description": %q}`, id, body, description)
     req := esapi.IndexRequest{
         Index:      index,
         DocumentID: id,
@@ -119,7 +121,7 @@ func (client *ESClient) Get(index string, query string, size int) (*esapi.Respon
 }
 
 // Parse extracts all "content" fields, concatenates them, and returns a single string
-func (client *ESClient) Parse(response *esapi.Response) (string, error) {
+func (client *ESClient) Parse(response *esapi.Response, FIELD string) (string, error) {
     if response == nil {
         return "", io.EOF
     }
@@ -139,8 +141,18 @@ func (client *ESClient) Parse(response *esapi.Response) (string, error) {
     // Use a StringBuilder for efficient string concatenation
     var sb strings.Builder
     for _, hit := range esResponse.Hits.Hits {
-        sb.WriteString(hit.Source.Content)
-        sb.WriteString(" ") // Add a space or any separator between content strings, if needed
+        sb.WriteString("\nDocument title: " + hit.Source.Title + "\n")
+        switch FIELD {
+        case "content":
+            sb.WriteString(hit.Source.Content)
+        case "description":
+            sb.WriteString(hit.Source.Description)
+        case "title":
+            sb.WriteString(hit.Source.Title)
+        default:
+            log.Fatalf("No evailable source passed to Paese(), got: %s", FIELD)
+        }
+        sb.WriteString(" ")
     }
 
     // Convert the StringBuilder to a string and return

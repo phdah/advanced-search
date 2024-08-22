@@ -60,7 +60,19 @@ func main() {
         // Ensure everything is processed before indexing
         c.Wait()
 
+        // Get a description of the document
+        prompt := "Please write down a short description of the main keywords and concepts in this document:\n"
+        prompt += document
+        prompt += "\nOnly provide me with the description, nothing else"
+
+        llmContext := LLMContext{}
+        llmContext.Prompt = prompt
+        llmContext, err = AskOllamaQuestion(llmContext)
+        if err != nil {
+            log.Fatalf("Error asking Ollama question: %v", err)
+        }
+
         // Index the document
-        es.Put(esIndex, documentName, document)
+        es.Put(esIndex, documentName, document, llmContext.Response)
     }
 }

@@ -11,7 +11,7 @@ import (
 
 type LLMContext struct {
     Prompt      string
-    Resposne    string
+    Response    string
     Context     string
 }
 
@@ -89,7 +89,7 @@ func AskOllamaQuestion(llmContext LLMContext) (LLMContext, error) {
     }
 
     llmContext.Context += "\nResponse: " + combinedResponse
-    llmContext.Resposne = combinedResponse
+    llmContext.Response = combinedResponse
     // Return the combined response
     return llmContext, nil
 }
