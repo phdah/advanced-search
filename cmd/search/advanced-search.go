@@ -26,7 +26,8 @@ func main() {
     query := os.Args[1]
 
     // Get documents matching the query
-    res, err := es.Get(esIndex, query, 2)
+    res, err := es.Get(esIndex, "Aircraft Category Piston", 2)
+    // res, err := es.Get(esIndex, query, 2)
     if err != nil {
         log.Fatalf("Error performing search: %s", err)
     }

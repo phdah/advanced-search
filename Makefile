@@ -13,4 +13,4 @@ scrape: build-scrape
 	go run ./cmd/scraping-docs.go
 
 build-scrape:
-	go build -o ./bin/scraping-docs ./cmd/docs/scraping-docs.go
+	go build -o ./bin/scraping-docs ./cmd/docs/scrape/scraping-docs.go
