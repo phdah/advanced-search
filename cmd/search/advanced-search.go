@@ -41,7 +41,9 @@ func main() {
 
 Format your response like this:
 
-<Document title from where the information is taken>: <the answer to the question(s) preferably using quotes and listing of result>`
+<Document title from where the information is taken>: <the answer to the question(s) preferably using quotes and listing of result>
+
+Don't end your response with the option to follow up with more questions. You will only answer a single one, and then shut down`
 
     prompt += "\nThis is the documentations: " + document
 
