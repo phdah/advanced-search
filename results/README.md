@@ -1,5 +1,34 @@
 # Results
 
+## Overview of the Process
+
+### 1. Data Scraping
+- **Process**: Data was scraped from several URLs associated with our public API documentation.
+- **Challenges**: This approach allowed for the rapid collection of a large dataset, but the data wasn't fully cleaned, leading to inconsistencies and potential noise in subsequent processes.
+
+### 2. Document Matching with Elasticsearch
+- **Process**: The main program takes a user-provided question and uses it as a match query in Elasticsearch to find the top two matching documents.
+- **Challenges**: The algorithm struggled with filtering out filler words in the query, which diluted the accuracy of the document matching. This indicates a need for preprocessing the queries to improve match quality.
+
+### 3. LLM Integration for Answer Extraction
+- **Process**: The top two documents, along with the original question, are fed into a Large Language Model (LLM) to extract the answer, with the documents serving as mandatory reference sources.
+- **Challenges**: While the LLM generally performs as expected, the presence of scattered and overlapping information within the documents sometimes makes it difficult to pinpoint the most relevant answer. For example, multiple definitions of similar concepts (like what constitutes an aircraft) can confuse the model.
+
+## Results
+
+The performance of the system varied. For some questions, the LLM was able to identify the correct data path and produce accurate answers. However, for others, especially those involving more generic API-related queries, the results were less precise. The broad nature of the API and the diversity of topics covered in the documentation contributed to this inconsistency.
+
+## Recommendations for Improvement
+
+1. **Data Structuring**:
+   - Implement more rigorous data cleaning and structuring processes. This would involve preprocessing the scraped data to remove irrelevant content and ensure uniformity across documents.
+
+2. **LLM Tuning**:
+   - Experiment with LLM parameters and adjust the prompting strategy to enhance the relevance and accuracy of the responses. Fine-tuning the model on a dataset more closely aligned with the specific types of queries anticipated could also help.
+
+3. **Document Filtering**:
+   - Introduce a filtering step to limit the documents passed to the LLM to only those that are highly relevant to the query. This could involve refining the Elasticsearch query to better target specific sections of the documentation or implementing additional layers of processing to extract the most pertinent information before passing it to the LLM.
+
 ## Single question
 
 ```bash
